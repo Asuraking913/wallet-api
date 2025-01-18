@@ -4,5 +4,5 @@ from .views import TransactionView
 
 urlpatterns = [
     path("", views.index, name="Home Page"), 
-    path("/transact/",TransactionView.as_view(),  )
+    path("transact/",TransactionView.as_view(), name='transaction' )
 ]
