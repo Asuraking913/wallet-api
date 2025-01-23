@@ -21,4 +21,12 @@ class TransactionModel(models.Model):
             self.reference = self.id[:10]
             
         super().save()
+
+class Payment(models.Model):
+    id = models.CharField(max_length=255, primary_key=True, null=False, unique=True, default=generate_id)
+    verified = models.BooleanField(default=False)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    date = models.DateTimeField(auto_now_add=True)
+
+
     
