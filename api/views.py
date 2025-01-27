@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from rest_framework import generics
+from rest_framework import generics, status
 from .serializers import TransactionSerializer
 from .models import TransactionModel
 from rest_framework import views
 from rest_framework.response import Response
 from .flutterwave import FlutterwaveService
+from .serializers import AuthorizationUrlSerializer
 
 # Create your views here.
 
@@ -26,19 +27,19 @@ class TransactionView(generics.ListCreateAPIView):
 class AuthorizedUrlView(views.APIView):
 
     def post(self, request):
-        amount = request.data.get('amount')
-        email = request.data.get('email')
 
-        print(amount, flush=True)
-        print(email, flush=True)
+        serializer = AuthorizationUrlSerializer(data = request.data)
 
-        flutterwave = FlutterwaveService()
+        if serializer.is_valid():
+            data = serializer.validated_data
 
-        response = FlutterwaveService().initiate_transaction(amount, email)
+            flutterwave = FlutterwaveService()
+            response = flutterwave.initiate_transaction(data['amount'], data['email'])
 
-        print(response, flush=True)
 
-        return Response({"msg" : "Sent Data"})
+            return Response({"msg" : "Sent Data", "data" : response}, status=status.HTTP_200_OK)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
