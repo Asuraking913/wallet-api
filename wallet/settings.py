@@ -30,7 +30,7 @@ SECRET_KEY = "django-insecure-9dsl+#h!!8bvi7vvs0hryauaxrl06x5!g#f-7(y73kciobg2hx
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["wallet-api-6med.onrender.com", "https://wallet-rho-seven.vercel.app/"]
+ALLOWED_HOSTS = ["wallet-api-6med.onrender.com", "https://wallet-rho-seven.vercel.app/", "*"]
 
 
 # Application definition
